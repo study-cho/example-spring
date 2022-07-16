@@ -38,8 +38,9 @@ public class BoardService {
      * 등록 처리
      * @param board
      */
-    public void save(Board board) {
+    public int save(Board board) {
         repository.save(board);
+        return board.getBoardSeq();
     }
 
     /**
