@@ -1,6 +1,7 @@
 package com.example.examplespring.mvc.service;
 
 import com.example.examplespring.mvc.domain.Board;
+import com.example.examplespring.mvc.parameter.BoardParameter;
 import com.example.examplespring.mvc.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -38,7 +39,7 @@ public class BoardService {
      * 등록/수정 처리
      * @param parameter
      */
-    public void save(Board parameter) {
+    public void save(BoardParameter parameter) {
         //조회하여 리턴된 정보
         Board board = repository.get(parameter.getBoardSeq());
         if (board == null)
