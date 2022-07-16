@@ -38,14 +38,13 @@ public class BoardService {
      * 등록/수정 처리
      * @param parameter
      */
-    public int save(Board parameter) {
+    public void save(Board parameter) {
         //조회하여 리턴된 정보
         Board board = repository.get(parameter.getBoardSeq());
         if (board == null)
             repository.save(parameter);
         else
             repository.update(parameter);
-        return parameter.getBoardSeq();
     }
 
 
