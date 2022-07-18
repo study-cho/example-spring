@@ -13,6 +13,8 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -68,6 +70,13 @@ public class BoardController {
             @ApiImplicitParam(name = "contents", value = "내용", example = "spring 강좌")
     })
     public BaseResponse<Integer> save(BoardParameter parameter) {
+        // 제목 필수 체크
+        if(ObjectUtils.isEmpty(parameter.getTitle()))
+            throw new BaseException(BaseResponseCode.VALIDATE_REQUIRED, new String[] {"title", "제목"});
+        // 내용 필수 체크
+        if(ObjectUtils.isEmpty(parameter.getContents()))
+            throw new BaseException(BaseResponseCode.VALIDATE_REQUIRED, new String[] {"contents", "내용"});
+
         boardService.save(parameter);
         return new BaseResponse<>(parameter.getBoardSeq());
     }
