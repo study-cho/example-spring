@@ -7,7 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 게시판 서비스
@@ -48,6 +50,23 @@ public class BoardService {
             repository.update(parameter);
     }
 
+    /**
+     * 단순 반복문을 이용한 등록 처리
+     */
+    public void saveList1(List<BoardParameter> list) {
+        for (BoardParameter parameter : list) {
+            repository.save(parameter);
+        }
+    }
+
+    /**
+     * 100개씩 배열에 담아서 일괄 등록 처리
+     */
+    public void saveList2(List<BoardParameter> boardList) {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("boardList", boardList);
+        repository.saveList(paramMap);
+    }
 
     /**
      * 삭제 처리
