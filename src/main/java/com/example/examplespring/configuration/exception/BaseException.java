@@ -12,4 +12,9 @@ public class BaseException extends AbstractBaseException{
     public BaseException(BaseResponseCode responseCode) {
         this.responseCode = responseCode;
     }
+
+    public BaseException(BaseResponseCode responseCode, String[] args) {
+        this.responseCode = responseCode;
+        this.args = args;
+    }
 }

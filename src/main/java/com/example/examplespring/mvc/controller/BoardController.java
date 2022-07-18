@@ -1,6 +1,8 @@
 package com.example.examplespring.mvc.controller;
 
+import com.example.examplespring.configuration.exception.BaseException;
 import com.example.examplespring.configuration.http.BaseResponse;
+import com.example.examplespring.configuration.http.BaseResponseCode;
 import com.example.examplespring.mvc.domain.Board;
 import com.example.examplespring.mvc.parameter.BoardParameter;
 import com.example.examplespring.mvc.repository.BoardRepository;
@@ -47,7 +49,11 @@ public class BoardController {
             @ApiImplicitParam(name = "boardSeq", value = "게시물 번호", example = "1")
     })
     public BaseResponse<Board> get(@PathVariable int boardSeq) {
-        return new BaseResponse<>(boardService.get(boardSeq));
+        Board board = boardService.get(boardSeq);
+        // null 처리
+        if(board == null)
+            throw new BaseException(BaseResponseCode.DATA_IS_NULL, new String[] {"게시물"});
+        return new BaseResponse<>(board);
     }
 
     /**
