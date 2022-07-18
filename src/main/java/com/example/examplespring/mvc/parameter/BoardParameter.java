@@ -1,5 +1,6 @@
 package com.example.examplespring.mvc.parameter;
 
+import com.example.examplespring.mvc.domain.BoardType;
 import lombok.Data;
 
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.Date;
 public class BoardParameter {
 
     private int boardSeq;
+    private BoardType boardType;
     private String title;
     private String contents;
 
