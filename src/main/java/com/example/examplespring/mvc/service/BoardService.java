@@ -2,6 +2,7 @@ package com.example.examplespring.mvc.service;
 
 import com.example.examplespring.mvc.domain.Board;
 import com.example.examplespring.mvc.parameter.BoardParameter;
+import com.example.examplespring.mvc.parameter.BoardSearchParameter;
 import com.example.examplespring.mvc.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -22,10 +23,11 @@ public class BoardService {
 
     /**
      * 목록 리턴
+     * @param parameter
      * @return
      */
-    public List<Board> getList() {
-        return repository.getList();
+    public List<Board> getList(BoardSearchParameter parameter) {
+        return repository.getList(parameter);
     }
 
     /**
