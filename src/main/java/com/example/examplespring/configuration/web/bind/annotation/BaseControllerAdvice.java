@@ -23,4 +23,5 @@ public class BaseControllerAdvice {
     private BaseResponse<?> handleBaseException(BaseException e, WebRequest request) {
         return new BaseResponse<String>(e.getResponseCode(), messageSource.getMessage(e.getResponseCode().name(), e.getArgs(), null));
     }
+
 }
