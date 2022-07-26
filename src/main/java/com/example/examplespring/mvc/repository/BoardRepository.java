@@ -1,5 +1,6 @@
 package com.example.examplespring.mvc.repository;
 
+import com.example.examplespring.framework.data.domain.PageRequestParameter;
 import com.example.examplespring.mvc.domain.Board;
 import com.example.examplespring.mvc.parameter.BoardParameter;
 import com.example.examplespring.mvc.parameter.BoardSearchParameter;
@@ -14,7 +15,7 @@ import java.util.Map;
 @Repository
 public interface BoardRepository {
 
-    List<Board> getList(BoardSearchParameter parameter);
+    List<Board> getList(PageRequestParameter<BoardSearchParameter> pageRequestParameter);
 
     Board get(int boardSeq);
 
