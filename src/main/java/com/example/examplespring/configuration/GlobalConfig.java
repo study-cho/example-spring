@@ -23,6 +23,7 @@ public class GlobalConfig {
     private ResourceLoader resourceLoader;
 
     private String uploadFilePath;
+    private String schedulerCronExample1;
 
     @PostConstruct
     public void init() {
@@ -35,10 +36,15 @@ public class GlobalConfig {
         try {
             Resource resource = resourceLoader.getResource(resourcePath);
             Properties properties = PropertiesLoaderUtils.loadProperties(resource);
-            uploadFilePath = properties.getProperty("uploadFile.path");
+            this.uploadFilePath = properties.getProperty("uploadFile.path");
+            this.schedulerCronExample1 = properties.getProperty("scheduler.cron.example1");
         } catch (Exception e) {
             logger.error("e", e);
         }
+    }
+
+    public String getSchedulerCronExample1() {
+        return schedulerCronExample1;
     }
 
     public String getUploadFilePath() {
