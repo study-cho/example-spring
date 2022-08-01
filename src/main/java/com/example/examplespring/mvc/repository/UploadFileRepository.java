@@ -1,5 +1,6 @@
 package com.example.examplespring.mvc.repository;
 
+import com.example.examplespring.mvc.domain.UploadFile;
 import com.example.examplespring.mvc.parameter.UploadFileParameter;
 import org.springframework.stereotype.Repository;
 
@@ -11,4 +12,5 @@ public interface UploadFileRepository {
 
     void save(UploadFileParameter parameter);
 
+    UploadFile get(int uploadFileSeq);
 }

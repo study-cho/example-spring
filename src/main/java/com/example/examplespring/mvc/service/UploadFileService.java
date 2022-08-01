@@ -1,5 +1,6 @@
 package com.example.examplespring.mvc.service;
 
+import com.example.examplespring.mvc.domain.UploadFile;
 import com.example.examplespring.mvc.parameter.UploadFileParameter;
 import com.example.examplespring.mvc.repository.UploadFileRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,5 +21,9 @@ public class UploadFileService {
      */
     public void save(UploadFileParameter parameter) {
         repository.save(parameter);
+    }
+
+    public UploadFile get(int uploadFileSeq) {
+        return repository.get(uploadFileSeq);
     }
 }
