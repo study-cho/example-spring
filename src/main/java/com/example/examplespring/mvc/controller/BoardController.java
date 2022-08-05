@@ -40,21 +40,6 @@ public class BoardController {
     Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
-     * 목록 리턴
-     * @param parameter
-     * @param pageRequest
-     * @return
-     */
-    @GetMapping
-    @ResponseBody
-    @ApiOperation(value = "목록 조회", notes = "게시판 목록 정보를 조회할 수 있습니다.")
-    public BaseResponse<List<Board>> getList(@ApiParam BoardSearchParameter parameter, @ApiParam MySQLPageRequest pageRequest) {
-        logger.info("pageRequest : {}", pageRequest);
-        PageRequestParameter<BoardSearchParameter> pageRequestParameter = new PageRequestParameter<>(pageRequest, parameter);
-        return new BaseResponse<>(boardService.getList(pageRequestParameter));
-    }
-
-    /**
      * 상세 정보 리턴
      * @param boardSeq
      * @return
@@ -71,6 +56,20 @@ public class BoardController {
         if(board == null)
             throw new BaseException(BaseResponseCode.DATA_IS_NULL, new String[] {"게시물"});
         return new BaseResponse<>(board);
+    }
+
+    /**
+     * 목록 리턴
+     * @param parameter
+     * @param pageRequest
+     * @return
+     */
+    @GetMapping("/list")
+    public void list(BoardSearchParameter parameter, MySQLPageRequest pageRequest, Model model) {
+        logger.info("pageRequest : {}", pageRequest);
+        PageRequestParameter<BoardSearchParameter> pageRequestParameter = new PageRequestParameter<>(pageRequest, parameter);
+        List<Board> boardList = boardService.getList(pageRequestParameter);
+        model.addAttribute("boardList", boardList);
     }
 
     /**
