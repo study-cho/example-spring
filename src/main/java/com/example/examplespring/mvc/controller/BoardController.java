@@ -16,7 +16,9 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +29,7 @@ import java.util.List;
 /**
  * 게시판 컨트롤러
  */
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/board")
 @Api(tags = "게시판 API")
@@ -44,6 +46,7 @@ public class BoardController {
      * @return
      */
     @GetMapping
+    @ResponseBody
     @ApiOperation(value = "목록 조회", notes = "게시판 목록 정보를 조회할 수 있습니다.")
     public BaseResponse<List<Board>> getList(@ApiParam BoardSearchParameter parameter, @ApiParam MySQLPageRequest pageRequest) {
         logger.info("pageRequest : {}", pageRequest);
@@ -57,6 +60,7 @@ public class BoardController {
      * @return
      */
     @GetMapping("/{boardSeq}")
+    @ResponseBody
     @ApiOperation(value = "상세 조회", notes = "게시물 번호에 해당하는 상세 정보를 조회할 수 있습니다.")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "boardSeq", value = "게시물 번호", example = "1")
@@ -70,11 +74,28 @@ public class BoardController {
     }
 
     /**
+     * 등록/수정 화면
+     * @param parameter
+     * @param model
+     */
+    @GetMapping("/form")
+    @RequestConfig(loginCheck = false)
+    public void form(BoardParameter parameter, Model model) {
+        if (parameter.getBoardSeq() > 0) {
+            Board board = boardService.get(parameter.getBoardSeq());
+            model.addAttribute("board", board);
+        }
+        model.addAttribute("parameter", parameter);
+    }
+
+
+    /**
      * 등록/수정 처리
      * @param parameter
      */
-    @PutMapping("/save")
-//    @RequestConfig(loginCheck = true)
+    @PostMapping("/save")
+    @RequestConfig(loginCheck = false)
+    @ResponseBody
     @ApiOperation(value = "등록/수정 처리", notes = "신규 게시물 저장 및 기존 게시물 업데이트가 가능합니다.")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "boardSeq", value = "게시물 번호", example = "1"),
@@ -149,6 +170,7 @@ public class BoardController {
      */
     @DeleteMapping("/{boardSeq}")
     @RequestConfig(loginCheck = true)
+    @ResponseBody
     @ApiOperation(value = "삭제 처리", notes = "게시물 번호에 해당하는 정보를 삭제합니다.")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "boardSeq", value = "게시물 번호", example = "1")
