@@ -14,6 +14,6 @@ import java.util.List;
 public class BoardSearchParameter {
 
     private String keyword;
-    private List<BoardType> boardTypes;
+    private BoardType[] boardTypes;
 
 }
