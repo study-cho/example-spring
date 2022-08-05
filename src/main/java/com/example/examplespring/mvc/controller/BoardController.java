@@ -7,6 +7,7 @@ import com.example.examplespring.framework.data.domain.MySQLPageRequest;
 import com.example.examplespring.framework.data.domain.PageRequestParameter;
 import com.example.examplespring.framework.web.bind.annotation.RequestConfig;
 import com.example.examplespring.mvc.domain.Board;
+import com.example.examplespring.mvc.domain.MenuType;
 import com.example.examplespring.mvc.parameter.BoardParameter;
 import com.example.examplespring.mvc.parameter.BoardSearchParameter;
 import com.example.examplespring.mvc.repository.BoardRepository;
@@ -31,8 +32,6 @@ import java.util.List;
  */
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/board")
-@Api(tags = "게시판 API")
 public class BoardController {
 
     private final BoardService boardService;
@@ -40,11 +39,27 @@ public class BoardController {
     Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
+     * 목록 리턴
+     * @param parameter
+     * @param pageRequest
+     * @return
+     */
+    @GetMapping("/{menuType}")
+    public String list(@PathVariable MenuType menuType, BoardSearchParameter parameter, MySQLPageRequest pageRequest, Model model) {
+        logger.info("menuType : {}", menuType);
+        logger.info("pageRequest : {}", pageRequest);
+        PageRequestParameter<BoardSearchParameter> pageRequestParameter = new PageRequestParameter<>(pageRequest, parameter);
+        List<Board> boardList = boardService.getList(pageRequestParameter);
+        model.addAttribute("boardList", boardList);
+        return "/board/list";
+    }
+
+    /**
      * 상세 정보 리턴
      * @param boardSeq
      * @return
      */
-    @GetMapping("/{boardSeq}")
+    @GetMapping("/detail/{boardSeq}")
     public String detail(@PathVariable int boardSeq, Model model) {
         Board board = boardService.get(boardSeq);
         // null 처리
@@ -53,20 +68,6 @@ public class BoardController {
 
         model.addAttribute("board", board);
         return "/board/detail";
-    }
-
-    /**
-     * 목록 리턴
-     * @param parameter
-     * @param pageRequest
-     * @return
-     */
-    @GetMapping("/list")
-    public void list(BoardSearchParameter parameter, MySQLPageRequest pageRequest, Model model) {
-        logger.info("pageRequest : {}", pageRequest);
-        PageRequestParameter<BoardSearchParameter> pageRequestParameter = new PageRequestParameter<>(pageRequest, parameter);
-        List<Board> boardList = boardService.getList(pageRequestParameter);
-        model.addAttribute("boardList", boardList);
     }
 
     /**
