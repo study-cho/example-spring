@@ -6,6 +6,7 @@ import com.example.examplespring.mvc.domain.BaseCodeLabelEnum;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
@@ -61,6 +62,13 @@ public class WebConfiguration implements WebMvcConfigurer {
     @Bean
     public GlobalConfig globalConfig() {
         return new GlobalConfig();
+    }
+
+    @Bean
+    public FilterRegistrationBean<SitemeshConfiguration> sitemeshBean() {
+        FilterRegistrationBean<SitemeshConfiguration> filter = new FilterRegistrationBean<>();
+        filter.setFilter(new SitemeshConfiguration());
+        return filter;
     }
 
     @Override
