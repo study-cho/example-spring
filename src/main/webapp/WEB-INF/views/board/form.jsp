@@ -6,13 +6,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>등록/수정</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 </head>
 <body>
     <div class="container">
         <form id="form" method="post" action="/save">
             <input type="hidden" name="boardSeq" value="${board == null ? 0 : board.boardSeq}"/>
-            <input type="hidden" name="boardType" value="COMMUNITY"/>
             <div class="row mb-3">
                 <label for="title" class="col-sm-2 col-form-label"><spring:message code="board.title"/></label>
                 <div class="col-sm-10">
@@ -28,7 +26,7 @@
             <button type="submit" class="btn btn-primary"><spring:message code="button.save"/></button>
         </form>
     </div>
-    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+
     <script>
         $(function() {
             let $form = $('#form');

@@ -8,6 +8,11 @@
 <head>
     <meta charset="UTF-8">
     <title>웹페이지 제목</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <style type="text/css">
+        .active {color: blue !important;}
+    </style>
+    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <sitemesh:write property="head"/>
 </head>
 <body>
@@ -19,11 +24,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/community"><spring:message code="menu.community"/></a></li>
-                    <li class="nav-item"><a class="nav-link" href="/notice"><spring:message code="menu.notice"/></a></li>
-                    <li class="nav-item"><a class="nav-link" href="/faq"><spring:message code="menu.faq"/></a></li>
-                    <li class="nav-item"><a class="nav-link" href="/inquiry"><spring:message code="menu.inquiry"/></a></li>
+                    <li class="nav-item"><a class="nav-link" aria-current="page" href="/">Home</a></li>
+                    <c:forEach var="menu" items="${menuTypes}">
+                    <li class="nav-item"><a class="nav-link ${menu == menuType ? 'active' : ''}" href="${menu.url()}"><spring:message code="${menu.menuCode()}"/></a></li>
+                    </c:forEach>
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -33,5 +37,6 @@
         </div>
     </nav>
     <sitemesh:write property="body"/>
+
 </body>
 </html>

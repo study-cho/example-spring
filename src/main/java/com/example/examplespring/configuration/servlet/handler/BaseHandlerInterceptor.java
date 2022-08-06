@@ -3,6 +3,7 @@ package com.example.examplespring.configuration.servlet.handler;
 import com.example.examplespring.configuration.exception.BaseException;
 import com.example.examplespring.configuration.http.BaseResponseCode;
 import com.example.examplespring.framework.web.bind.annotation.RequestConfig;
+import com.example.examplespring.mvc.domain.MenuType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
@@ -35,6 +36,10 @@ public class BaseHandlerInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        if(handler instanceof HandlerMethod)
+            if (modelAndView != null)
+                modelAndView.addObject("menuTypes", MenuType.values());
+
         logger.info("postHandle requestURI : {}", request.getRequestURI());
     }
 }
